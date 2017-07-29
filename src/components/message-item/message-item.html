@@ -1,0 +1,7 @@
+<div class='message' [class.byUser]='byUser'>
+	<img *ngIf='!byUser' class='message__author-avatar' [src]='message?.author?.avatar | imageUrl: "user" : true'>
+	<div class='message__container'>
+		<p *ngIf='!byUser' class='message__author-name'>{{ message?.author?.name }}</p>
+		<p class='message__text'>{{ message?.text }}</p>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<ion-header>
+	<ion-navbar color='primary'>
+		<ion-title>Chats</ion-title>
+	</ion-navbar>
+	<ion-segment color='primary' [(ngModel)]="activeSegment" (ionChange)='onSegmentChange()'>
+		<ion-segment-button value="all">
+			All
+		</ion-segment-button>
+		<ion-segment-button value="subscribed">
+			Subscribed
+		</ion-segment-button>
+	</ion-segment>
+</ion-header>
+<ion-content>
+
+	<ion-refresher (ionRefresh)='refresh($event)'>
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<p class='doesNotExist' *ngIf='!( chats$ | async )?.length'>{{ doesNotExist }}</p>
+
+	<ion-list>
+		<chat-item *ngFor='let chat of ( chats$ | async )' [chat]='chat' (open)='openChat(chat._id)'></chat-item>
+	</ion-list>
+
+	<ion-infinite-scroll (ionInfinite)="loadMore($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+	<ion-fab right bottom (tap)='createChat()'>
+		<button ion-fab>
+			<ion-icon name="add"></ion-icon>
+		</button>
+	</ion-fab>
+</ion-content>

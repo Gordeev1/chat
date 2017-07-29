@@ -1,0 +1,20 @@
+<ion-header>
+	<ion-navbar color='primary'>
+		<ion-title>{{ ( chat$ | async )?.name }}</ion-title>
+		<ion-buttons right>
+			<button ion-button (tap)='showDetail()' icon-only>
+				<ion-icon name='ios-information-circle-outline'></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+<ion-content #content>
+	<p class='doesNotExist' *ngIf='!( messages$ | async )?.length'>No messages found</p>
+	<message-item *ngFor='let message of ( messages$ | async )' [message]='message' [userId]='userId$ | async'></message-item>
+</ion-content>
+<ion-footer no-border>
+	<input-message-toolbar *ngIf='isSubscribed$ | async; else subscribeBtn' (submit)='submitMessage($event)' [loading]='chatLoading$ | async'></input-message-toolbar>
+	<ng-template #subscribeBtn>
+		<button [disabled]='userChatsLoading$ | async' ion-button class='subscribe-btn' color='secondary' full (tap)='subscribeChat()'>Subscribe</button>
+	</ng-template>
+</ion-footer>

@@ -1,0 +1,12 @@
+<ion-content class='sign'>
+
+    <div class='base'>
+        <input [(ngModel)]='name' class='base__input' type='text' placeholder='Enter name'>
+        <button ion-button color='main' class='base__submit-btn' (tap)='authorize("base")'>Sign In</button>
+    </div>
+
+    <div class='social' *ngIf='isMobile'>
+        <p>Or sign with</p>
+        <button color="light" small ion-button (tap)='authorize("facebook")'>Facebook</button>
+    </div>
+</ion-content>

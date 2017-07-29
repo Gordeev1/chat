@@ -1,0 +1,14 @@
+user-item {
+
+    ion-label {
+        display: flex;
+        justify-content: space-between;    
+    }
+
+    .online-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: greenyellow;
+    }
+}

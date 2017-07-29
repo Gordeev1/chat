@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color='primary'>
+    <ion-title>Chat Detail</ion-title>
+    <ion-buttons left>
+      <button icon-only ion-button (tap)="dismiss()">
+				<ion-icon name="close"></ion-icon>
+			</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <chat-item [chat]='chat$ | async'></chat-item>
+
+  <h4>Members:</h4>
+
+  <ion-list>
+    <user-item *ngFor='let user of ( members$ | async )' [user]='user'></user-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,10 @@
+<ion-item (tap)='open.next()'>
+	<ion-thumbnail item-start>
+		<img *ngIf='chat?.avatar; else placeholder' [src]='chat?.avatar | imageUrl: "chat" : true'>
+		<ng-template #placeholder>
+			<div class='placeholder'>{{ chat?.name.charAt(0) }}</div>
+		</ng-template>
+	</ion-thumbnail>
+	<h2>{{ chat?.name }}</h2>
+	<p>{{ chat?.description }}</p>
+</ion-item>

@@ -1,0 +1,17 @@
+input-message-toolbar {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    background: white;
+
+    .input {
+        border: none;
+        resize: none;
+        margin-left: 12px;
+        width: 100%;
+        padding: 6px 0;    
+    }
+    .submit-btn {
+
+    }
+}

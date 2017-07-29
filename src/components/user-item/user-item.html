@@ -1,0 +1,7 @@
+<ion-item>
+	<ion-avatar item-start>
+		<img [src]='user?.avatar | imageUrl: "user" : true'>
+	</ion-avatar>
+	<h2>{{ user?.name }}</h2>
+	<div *ngIf='user?.online' class='online-indicator'></div>
+</ion-item>
