@@ -11,12 +11,12 @@ export class ApiService {
 
     call = action => {
         const {
-			types,
+            types,
             apiPayload,
             shouldCallAPI,
             schema,
             toReducer,
-		} = action;
+        } = action;
 
         if (!shouldCallAPI) {
             return Promise.resolve();

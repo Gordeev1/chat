@@ -48,7 +48,7 @@ export class ChatsPage {
 		this.getChats({});
 	}
 
-	async getChats(params) {
+	getChats(params) {
 		this.activeSegment === 'all'
 			? this.chatsActions.get(params)
 			: this.userActions.getChats(params);

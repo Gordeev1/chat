@@ -13,7 +13,12 @@
 	<message-item *ngFor='let message of ( messages$ | async )' [message]='message' [userId]='userId$ | async'></message-item>
 </ion-content>
 <ion-footer no-border>
-	<input-message-toolbar *ngIf='isSubscribed$ | async; else subscribeBtn' (submit)='submitMessage($event)' [loading]='chatLoading$ | async'></input-message-toolbar>
+	<input-message-toolbar 
+		*ngIf='isSubscribed$ | async; else subscribeBtn' 
+		(submit)='submitMessage($event)' 
+		[loading]='chatLoading$ | async'
+		(focus)='scrollBottom()'
+	></input-message-toolbar>
 	<ng-template #subscribeBtn>
 		<button [disabled]='userChatsLoading$ | async' ion-button class='subscribe-btn' color='secondary' full (tap)='subscribeChat()'>Subscribe</button>
 	</ng-template>

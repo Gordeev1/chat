@@ -1,5 +1,6 @@
 ## Installation
 ```bash
+$ npm i -g cordova ionic
 $ git clone https://github.com/Gordeev1/chat
 $ cd chat
 $ npm i
@@ -16,7 +17,7 @@ $ ionic serve
 </plugin>
 ```
 
-2. Enter your production serve url
+2. Enter your production server url
 ```typescript
 // src/constants.ts
 const BASE_URL = PRODUCTION ? '<ENTER_YOUR_URL>' : 'http://localhost';

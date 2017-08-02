@@ -81,5 +81,10 @@ export class UserActions {
                     scroll && scroll.enable(false)
                 }
             })
+            .catch(error => {
+                scroll && scroll.complete();
+                refresh && refresh.complete();
+                throw error;
+            })
     }
 }

@@ -61,6 +61,11 @@ export class ChatsActions {
                 }
 
             })
+            .catch(error => {
+                scroll && scroll.complete();
+                refresh && refresh.complete();
+                throw error;
+            })
     }
 
     post = (payload: ChatModel) => this.api.call({

@@ -1,4 +1,5 @@
 <textarea elastic [bounded]='true' [disabled]='loading' [(ngModel)]='text' class='input' type='text' placeholder='Enter your message'
- (focus)='scrollBottom()'></textarea>
+ (focus)='focus.next()'></textarea>
 <button [disabled]='loading' class='submit-btn' ion-button icon-only clear (tap)='submitMessage()'>
 	<ion-icon name='send'></ion-icon>
+</button>
