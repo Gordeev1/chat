@@ -6,14 +6,15 @@ import { ApiService } from '../services/api';
 import { CHATS_LIMIT_PER_REQUEST } from '../constants';
 import { ChatsArray } from '../schemas';
 import * as models from './UserActions.models';
+import { AppState } from '../reducers';
 
 @Injectable()
 export class UserActions {
 
-    private state: any;
+    private state: AppState;
 
     constructor(
-        private store: Store<any>,
+        private store: Store<AppState>,
         private api: ApiService
     ) {
         this.store.select(s => s).subscribe(s => this.state = s);

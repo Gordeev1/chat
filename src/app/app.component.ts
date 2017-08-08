@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { SocketService } from '../services';
+import { AppState } from '../reducers';
 
 @Component({
 	templateUrl: 'app.html'
@@ -19,7 +20,7 @@ export class MyApp {
 	appContainer;
 
 	constructor(
-		private store: Store<any>,
+		private store: Store<AppState>,
 		private platform: Platform,
 		private statusBar: StatusBar,
 		private splashScreen: SplashScreen,

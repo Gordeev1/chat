@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Facebook } from '@ionic-native/facebook';
 import { Store } from '@ngrx/store';
 import { UserActions } from '../actions';
+import { AppState } from '../reducers';
 
 @Injectable()
 export class FacebookService {
@@ -10,7 +11,7 @@ export class FacebookService {
     authSubscription: any;
 
     constructor(
-        private store: Store<any>,
+        private store: Store<AppState>,
         private userActions: UserActions,
         private facebook: Facebook
     ) {

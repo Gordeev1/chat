@@ -41,5 +41,7 @@ export class ChatDetailPage {
 
 	dismiss = () => this.viewCtrl.dismiss()
 
+	trackById = (index, item) => item._id;
+
 }
 

@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content #content>
 	<p class='doesNotExist' *ngIf='!( messages$ | async )?.length'>No messages found</p>
-	<message-item *ngFor='let message of ( messages$ | async )' [message]='message' [userId]='userId$ | async'></message-item>
+	<message-item *ngFor='let message of ( messages$ | async ); trackBy: trackById' [message]='message' [userId]='userId$ | async'></message-item>
 </ion-content>
 <ion-footer no-border>
 	<input-message-toolbar 

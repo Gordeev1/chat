@@ -8,16 +8,18 @@ import { Chat, ChatsArray, MessagesArray, Message, UsersArray } from '../schemas
 import { ApiService } from '../services/api';
 import { CHATS_LIMIT_PER_REQUEST, MESSAGES_LIMIT_PER_REQUEST } from '../constants';
 import { Chat as ChatModel } from '../models/Chat';
+import { Message as MessageModel } from '../models/Message';
 import * as models from './ChatsActions.models';
 import * as eventTypes from '../actionTypes/events';
+import { AppState } from '../reducers';
 
 @Injectable()
 export class ChatsActions {
 
-    private state: any;
+    private state: AppState;
 
     constructor(
-        private store: Store<any>,
+        private store: Store<AppState>,
         private api: ApiService,
         private events: Events
     ) {
@@ -122,6 +124,9 @@ export class ChatsActions {
         },
         toReducer: { id },
         schema: Message
+    }).then(response => {
+        this.store.dispatch({ type: types.CHATS_UPDATE, payload: { updatedAt: new Date() }, params: { id } });
+        return response;
     })
 
     getMembers = ({ id }: models.Get) => this.api.call({
@@ -141,7 +146,7 @@ export class ChatsActions {
 
     onNewMessage = ({ id, item }) => {
 
-        const shouldAdd = !this.state.entities.chats[id].messages.includes(item._id);
+        const shouldAdd = !(<MessageModel[]>this.state.entities.chats[id].messages).includes(item._id);
 
         shouldAdd && this.store.dispatch({
             type: types.CHATS_NEW_MESSAGE,

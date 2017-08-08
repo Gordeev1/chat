@@ -104,4 +104,6 @@ export class ChatsPage {
 		this.loader.dismiss();
 	}
 
+	trackById = (index, item) => item._id;
+
 }

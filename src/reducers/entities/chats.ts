@@ -2,7 +2,7 @@ import union from 'lodash/union';
 import pull from 'lodash/pull';
 import * as types from '../../actionTypes';
 
-const concatChildren = (predicate, withUpdate?) => (state, action) => {
+const concatChildren = predicate => (state, action) => {
 
     const { id } = action.params;
     const { result } = action.payload;
@@ -12,8 +12,7 @@ const concatChildren = (predicate, withUpdate?) => (state, action) => {
     return state[id]
         ? Object.assign({}, state, {
             [id]: Object.assign({}, state[id], {
-                [predicate]: state[id][predicate] ? union(state[id][predicate], field) : field,
-                updatedAt: withUpdate ? new Date() : state[id].updatedAt
+                [predicate]: state[id][predicate] ? union(state[id][predicate], field) : field
             })
         })
         : state;
@@ -35,8 +34,12 @@ const removeChildren = predicate => (state, action) => {
 
 export default (state, action) => {
     switch (action.type) {
+        case types.CHATS_UPDATE:
+            return Object.assign({}, state, {
+                [action.params.id]: Object.assign({}, state[action.params.id], action.payload)
+            });
         case types.CHATS_MESSAGE_POST_SUCCESS:
-            return concatChildren('messages', true)(state, action);
+            return concatChildren('messages')(state, action);
         case types.CHATS_MESSAGES_GET_SUCCESS:
         case types.CHATS_NEW_MESSAGE:
             return concatChildren('messages')(state, action);

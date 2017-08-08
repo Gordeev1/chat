@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content padding>
 
-  <chat-item [chat]='chat$ | async'></chat-item>
+  <chat-item [chat]='chat$ | async; trackBy: trackById'></chat-item>
 
   <h4>Members:</h4>
 

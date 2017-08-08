@@ -20,7 +20,7 @@
 	<p class='doesNotExist' *ngIf='!( chats$ | async )?.length'>{{ doesNotExist }}</p>
 
 	<ion-list>
-		<chat-item *ngFor='let chat of ( chats$ | async )' [chat]='chat' (open)='openChat(chat._id)'></chat-item>
+		<chat-item *ngFor='let chat of ( chats$ | async ); trackBy: trackById' [chat]='chat' (open)='openChat(chat._id)'></chat-item>
 	</ion-list>
 
 	<ion-infinite-scroll (ionInfinite)="loadMore($event)">

@@ -80,4 +80,6 @@ export class ChatPage {
 
 	scrollBottom = () => setTimeout(() => this.content.scrollToBottom(300), 200)
 
+	trackById = (index, item) => item._id;
+
 }
