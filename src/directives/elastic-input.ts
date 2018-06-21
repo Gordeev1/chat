@@ -3,23 +3,20 @@ import { Directive, ElementRef, HostListener, Renderer, Input } from '@angular/c
 const DEFAULT_HEIGHT: number = 16;
 
 @Directive({
-    selector: 'textarea[elastic]'
+	selector: 'textarea[elastic]'
 })
 export class ElasticInput {
+	@Input() bounded: boolean = false;
 
-    @Input() bounded: boolean = false;
+	constructor(private el: ElementRef, private renderer: Renderer) {}
 
-    constructor(
-        private el: ElementRef,
-        private renderer: Renderer
-    ) { }
+	@HostListener('keyup')
+	change() {
+		const element = this.el.nativeElement;
+		const condition = this.bounded ? element.scrollHeight < DEFAULT_HEIGHT * 5 : true;
 
-    @HostListener('keyup') change() {
-        const element = this.el.nativeElement;
-        const condition = this.bounded ? element.scrollHeight < DEFAULT_HEIGHT * 5 : true;
-
-        if (condition) {
-            this.renderer.setElementStyle(element, 'height', element.scrollHeight + 'px');
-        }
-    }
+		if (condition) {
+			this.renderer.setElementStyle(element, 'height', element.scrollHeight + 'px');
+		}
+	}
 }

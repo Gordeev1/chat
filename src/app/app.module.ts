@@ -9,9 +9,7 @@ import { services } from '../services';
 import { actions } from '../actions';
 
 @NgModule({
-	declarations: [
-		MyApp,
-	],
+	declarations: [MyApp],
 	imports: [
 		BrowserModule,
 		IonicModule.forRoot(MyApp),
@@ -26,4 +24,4 @@ import { actions } from '../actions';
 		{ provide: ErrorHandler, useClass: IonicErrorHandler }
 	]
 })
-export class AppModule { }
+export class AppModule {}

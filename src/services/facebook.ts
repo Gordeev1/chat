@@ -6,49 +6,57 @@ import { AppState } from '../reducers';
 
 @Injectable()
 export class FacebookService {
+	authorized: boolean;
+	authSubscription: any;
 
-    authorized: boolean;
-    authSubscription: any;
+	constructor(
+		private store: Store<AppState>,
+		private userActions: UserActions,
+		private facebook: Facebook
+	) {
+		this.authSubscription = this.store
+			.select(state => {
+				const { authorized, facebook } = state.user;
+				return Boolean(authorized && facebook);
+			})
+			.subscribe(authorized => (this.authorized = authorized));
+	}
 
-    constructor(
-        private store: Store<AppState>,
-        private userActions: UserActions,
-        private facebook: Facebook
-    ) {
-        this.authSubscription = this.store
-            .select(state => {
-                const { authorized, facebook } = state.user;
-                return Boolean(authorized && facebook);
-            })
-            .subscribe(authorized => this.authorized = authorized)
-    }
+	authorize = async () => {
+		try {
+			const auth = await this.facebook.login(['email', 'public_profile']);
 
-    authorize = async () => {
+			const { userID, accessToken } = auth.authResponse;
 
-        try {
+			const user = await this.facebook.api(
+				'me?fields=birthday,email,gender,id,name,picture',
+				['email', 'public_profile']
+			);
 
-            const auth = await this.facebook.login(['email', 'public_profile']);
+			const {
+				name,
+				email,
+				birthday,
+				gender,
+				picture: {
+					data: { url }
+				}
+			} = user;
 
-            const { userID, accessToken } = auth.authResponse;
+			const payload = {
+				id: userID,
+				name,
+				email,
+				avatar: url,
+				gender,
+				birthday,
+				accessToken
+			};
 
-            const user = await this.facebook.api('me?fields=birthday,email,gender,id,name,picture', ['email', 'public_profile'])
-
-            const { name, email, birthday, gender, picture: { data: { url } } } = user;
-
-            const payload = {
-                id: userID,
-                name,
-                email,
-                avatar: url,
-                gender,
-                birthday,
-                accessToken
-            }
-
-            return this.userActions.authorize({ payload, method: 'facebook' });
-        } catch (error) {
-            console.log('[FB] AUTHORIZE ERROR', error);
-            return Promise.reject(error);
-        }
-    }
+			return this.userActions.authorize({ payload, method: 'facebook' });
+		} catch (error) {
+			console.log('[FB] AUTHORIZE ERROR', error);
+			return Promise.reject(error);
+		}
+	};
 }

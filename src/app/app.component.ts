@@ -12,7 +12,6 @@ import { AppState } from '../reducers';
 	templateUrl: 'app.html'
 })
 export class MyApp {
-
 	@ViewChild(Nav) nav: Nav;
 	rootPage = 'SignPage';
 	authSubscription: Subscription;
@@ -30,13 +29,12 @@ export class MyApp {
 		private keyboard: Keyboard
 	) {
 		this.platform.ready().then(() => {
-
 			this.authSubscription = this.store
 				.select(s => s.user.authorized)
-				.subscribe(this.authHandler)
+				.subscribe(this.authHandler);
 
 			this.initializeApp();
-		})
+		});
 	}
 
 	initializeApp() {
@@ -49,23 +47,28 @@ export class MyApp {
 		if (!this.initialHeight && window.innerHeight) {
 			this.initialHeight = window.innerHeight;
 		}
-		this.keyboard
-			.onKeyboardShow()
-			.subscribe(e => {
-				if (!this.appContainer) {
-					this.appContainer = document.getElementsByTagName('ion-app')[0];
-				}
-				this.renderer.setElementStyle(this.appContainer, 'height', this.initialHeight - e.keyboardHeight + 'px');
-			})
+		this.keyboard.onKeyboardShow().subscribe(e => {
+			if (!this.appContainer) {
+				this.appContainer = document.getElementsByTagName('ion-app')[0];
+			}
+			this.renderer.setElementStyle(
+				this.appContainer,
+				'height',
+				this.initialHeight - e.keyboardHeight + 'px'
+			);
+		});
 		this.keyboard
 			.onKeyboardHide()
 			.subscribe(() =>
-				this.renderer.setElementStyle(this.appContainer, 'height', this.initialHeight + 'px')
-			)
-	}
+				this.renderer.setElementStyle(
+					this.appContainer,
+					'height',
+					this.initialHeight + 'px'
+				)
+			);
+	};
 
 	authHandler = authorized => {
-
 		if (authorized) {
 			this.nav.setRoot('ChatsPage');
 			if (!this.socket.instance) this.socket.init();
@@ -74,5 +77,5 @@ export class MyApp {
 			this.nav.setRoot('SignPage');
 			this.menuCtrl.close();
 		}
-	}
+	};
 }
